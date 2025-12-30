@@ -14,52 +14,45 @@
             --text-muted: #64748b;
             --border: #e2e8f0;
             --success: #10b981;
+            --accent: #f59e0b;
         }
 
         body { 
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
             background-color: var(--bg);
             color: var(--text-main);
             margin: 0;
+            padding: 20px;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: center;
         }
 
-        .container {
-            width: 100%;
-            max-width: 900px;
-            padding: 40px 20px;
-            box-sizing: border-box;
-        }
+        .container { width: 100%; max-width: 900px; }
 
-        header {
-            margin-bottom: 30px;
-            text-align: center;
-        }
+        header { text-align: center; margin-bottom: 30px; }
+        h2 { margin: 0; color: var(--text-main); }
+        p.subtitle { color: var(--text-muted); margin: 5px 0 0 0; }
 
-        h2 { color: var(--text-main); margin-bottom: 10px; }
-        
-        /* Navigation Tabs */
+        /* Navigation */
         .nav-tabs {
             display: flex;
-            gap: 10px;
+            gap: 8px;
+            background: #e2e8f0;
+            padding: 4px;
+            border-radius: 10px;
             margin-bottom: 25px;
-            background: #eee;
-            padding: 5px;
-            border-radius: 8px;
         }
 
         .nav-tabs button {
             flex: 1;
-            padding: 12px;
+            padding: 10px;
             border: none;
             background: transparent;
             cursor: pointer;
             font-weight: 600;
-            border-radius: 6px;
-            transition: 0.2s;
+            border-radius: 8px;
             color: var(--text-muted);
+            transition: 0.3s;
         }
 
         .nav-tabs button.active {
@@ -68,71 +61,71 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
-        /* Forms and Sections */
+        /* Sections */
         .section { 
             background: var(--card-bg);
-            padding: 25px;
+            padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
             border: 1px solid var(--border);
+            animation: fadeIn 0.4s ease;
         }
 
-        .grid-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
 
         input, select, textarea {
-            padding: 10px 14px;
+            padding: 12px;
             border: 1px solid var(--border);
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 14px;
-            outline: none;
-            transition: border-color 0.2s;
-            box-sizing: border-box;
             width: 100%;
+            box-sizing: border-box;
+            outline: none;
         }
 
-        input:focus { border-color: var(--primary); }
+        input:focus { border-color: var(--primary); ring: 2px solid var(--primary); }
 
-        /* Buttons */
-        .btn {
-            padding: 10px 20px;
-            border-radius: 6px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-primary:hover { background: var(--primary-hover); }
-        
-        .btn-success { background: var(--success); color: white; margin-top: 20px; width: 100%; font-size: 16px; }
-
-        .member-row { 
+        /* Family Member Rows */
+        .member-row {
             background: #f1f5f9;
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 10px;
             display: grid;
-            grid-template-columns: 2fr 1fr 1.5fr 1fr 1fr;
+            grid-template-columns: 2fr 1fr 1.5fr 1fr 1.2fr;
             gap: 10px;
-            align-items: center;
         }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-add { background: #6366f1; color: white; font-size: 13px; margin-bottom: 20px; }
+        .btn-success { background: var(--success); color: white; width: 100%; font-size: 16px; margin-top: 10px; }
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-muted); }
 
         .hidden { display: none; }
 
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th { text-align: left; color: var(--text-muted); font-size: 13px; text-transform: uppercase; padding: 12px; border-bottom: 2px solid var(--border); }
-        td { padding: 12px; border-bottom: 1px solid var(--border); font-size: 14px; }
+        /* Table */
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th { text-align: left; font-size: 12px; text-transform: uppercase; color: var(--text-muted); padding: 10px; border-bottom: 2px solid var(--border); }
+        td { padding: 10px; border-bottom: 1px solid var(--border); font-size: 14px; }
 
-        .search-bar { display: flex; gap: 10px; margin-bottom: 20px; }
-        
-        h3 { margin-top: 0; color: var(--primary); font-size: 1.2rem; }
-        h4 { margin: 20px 0 10px 0; border-top: 1px solid var(--border); padding-top: 20px; }
+        /* Success Screen */
+        .success-box { text-align: center; border: 2px dashed var(--success); background: #f0fdf4; padding: 40px; border-radius: 12px; }
     </style>
 </head>
 <body>
@@ -140,38 +133,55 @@
 <div class="container">
     <header>
         <h2>Customer Intelligence</h2>
-        <p style="color: var(--text-muted)">Branch Manager Dashboard</p>
+        <p class="subtitle">Manager Data Entry & Analysis</p>
     </header>
 
-    <div class="nav-tabs">
+    <div class="nav-tabs" id="navBar">
         <button id="tab-entry" class="active" onclick="showScreen('entry')">Data Entry</button>
         <button id="tab-basic" onclick="showScreen('basic')">Quick Search</button>
         <button id="tab-detail" onclick="showScreen('detail')">Detailed Profile</button>
     </div>
 
     <div id="entry" class="section">
-        <h3>Primary Information</h3>
-        <div class="grid-row">
-            <input id="customerId" placeholder="Customer ID (Mandatory)">
-            <input id="headName" placeholder="Head of Family Name">
+        <div class="grid">
+            <div>
+                <label style="font-size: 12px; font-weight: bold;">Customer ID*</label>
+                <input id="customerId" placeholder="e.g. CUST-101">
+            </div>
+            <div>
+                <label style="font-size: 12px; font-weight: bold;">Primary Phone</label>
+                <input id="primaryPhone" placeholder="Phone Number">
+            </div>
         </div>
-        <div class="grid-row">
+        <div class="grid">
+            <input id="headName" placeholder="Head of Family Name">
             <input id="familyName" placeholder="Family / House Name">
-            <input id="primaryPhone" placeholder="Primary Contact Number">
         </div>
         <input id="nativePlace" placeholder="Native Place / Area" style="margin-bottom: 15px;">
-        <textarea id="notes" placeholder="Additional Notes..." rows="3"></textarea>
+        <textarea id="notes" placeholder="Additional Notes/Observations..." rows="3"></textarea>
 
-        <h4>Family Members</h4>
+        <h4 style="margin: 25px 0 10px 0; border-top: 1px solid var(--border); padding-top: 15px;">Family Members</h4>
         <div id="members"></div>
-        <button class="btn btn-primary" style="background: #6366f1; font-size: 13px;" onclick="addMember()">+ Add Family Member</button>
+        <button class="btn btn-add" onclick="addMember()">+ Add Member</button>
         
-        <button class="btn btn-success" onclick="saveCustomer()">Save Customer Record</button>
+        <button class="btn btn-success" onclick="saveCustomer()">Save Record</button>
+    </div>
+
+    <div id="completionScreen" class="section hidden">
+        <div class="success-box">
+            <h2 style="color: var(--success);">✔ Record Saved</h2>
+            <p>The data has been stored locally. Choose an action to finalize:</p>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn btn-primary" style="flex: 1;" onclick="sendEmail()">📧 Send to Manager</button>
+                <button class="btn btn-outline" style="flex: 1;" onclick="downloadCSV()">📊 Download CSV</button>
+            </div>
+            <button class="btn btn-outline" style="margin-top: 20px; width: 100%;" onclick="location.reload()">+ New Entry</button>
+        </div>
     </div>
 
     <div id="basic" class="section hidden">
         <h3>Customer Search</h3>
-        <div class="search-bar">
+        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
             <input id="searchInput" placeholder="Search by ID, Phone, or Name...">
             <button class="btn btn-primary" onclick="search()">Search</button>
         </div>
@@ -179,145 +189,112 @@
     </div>
 
     <div id="detail" class="section hidden">
-        <h3>In-Depth Profile</h3>
-        <div id="detailResult" style="line-height: 1.6;">
-            <p style="color: var(--text-muted)">Please search for a customer in the "Quick Search" tab first.</p>
-        </div>
+        <h3>Detailed Profile</h3>
+        <div id="detailResult"><p style="color: var(--text-muted)">Please search and select a record first.</p></div>
     </div>
 </div>
 
 <script>
-let data = JSON.parse(localStorage.getItem("customerData") || "[]");
-let selected = null;
+    let data = JSON.parse(localStorage.getItem("customerData") || "[]");
+    let currentRecord = null; // Holds the record just created
+    let selectedRecord = null; // Holds record found via search
 
-function showScreen(id) {
-  document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
-  document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
-  
-  document.getElementById(id).classList.remove('hidden');
-  document.getElementById('tab-' + id).classList.add('active');
-}
+    // Change this to your manager's email
+    const MANAGER_EMAIL = "manager@example.com";
 
-function addMember() {
-  const div = document.createElement("div");
-  div.className = "member-row";
-  div.innerHTML = `
-    <input placeholder="Full Name">
-    <select>
-      <option>Head</option>
-      <option>Spouse</option>
-      <option>Son</option>
-      <option>Daughter</option>
-    </select>
-    <input placeholder="Phone">
-    <input placeholder="Country">
-    <select>
-      <option>Job</option>
-      <option>Business</option>
-      <option>Study</option>
-      <option>Retired</option>
-      <option>Not Working</option>
-    </select>
-  `;
-  document.getElementById('members').appendChild(div);
-}
-
-function saveCustomer() {
-  const customerIdVal = document.getElementById('customerId').value;
-  if (!customerIdVal) {
-    alert("Customer ID is mandatory");
-    return;
-  }
-
-  const record = {
-    customerId: customerIdVal,
-    familyName: document.getElementById('familyName').value,
-    nativePlace: document.getElementById('nativePlace').value,
-    headName: document.getElementById('headName').value,
-    primaryPhone: document.getElementById('primaryPhone').value,
-    notes: document.getElementById('notes').value,
-    members: []
-  };
-
-  document.querySelectorAll("#members .member-row").forEach(r => {
-    const i = r.querySelectorAll("input, select");
-    record.members.push({
-      name: i[0].value,
-      relation: i[1].value,
-      phone: i[2].value,
-      country: i[3].value,
-      employment: i[4].value
-    });
-  });
-
-  data.push(record);
-  localStorage.setItem("customerData", JSON.stringify(data));
-  alert("Record Saved Successfully");
-  location.reload();
-}
-
-function search() {
-  const q = document.getElementById('searchInput').value.toLowerCase();
-  let out = "";
-  let found = false;
-
-  data.forEach(r => {
-    let match = r.customerId.toLowerCase().includes(q) || r.primaryPhone.includes(q);
-    r.members.forEach(m => {
-      if (m.name.toLowerCase().includes(q) || (m.phone && m.phone.includes(q))) match = true;
-    });
-
-    if (match) {
-        found = true;
-        selected = r;
-        out += `<div style="margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 10px;">
-                <strong>ID:</strong> ${r.customerId} | <strong>Family:</strong> ${r.familyName || "N/A"}</div>
-                <table>
-                <tr><th>Name</th><th>Relation</th><th>Country</th><th>Employment</th></tr>`;
-        r.members.forEach(x => {
-          out += `<tr><td>${x.name}</td><td>${x.relation}</td><td>${x.country}</td><td>${x.employment}</td></tr>`;
-        });
-        out += `</table>`;
+    function showScreen(id) {
+        document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+        document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
+        document.getElementById(id).classList.remove('hidden');
+        const tab = document.getElementById('tab-' + id);
+        if(tab) tab.classList.add('active');
     }
-  });
 
-  document.getElementById('basicResult').innerHTML = found ? out : "No matching records found.";
-}
+    function addMember() {
+        const div = document.createElement("div");
+        div.className = "member-row";
+        div.innerHTML = `
+            <input placeholder="Name">
+            <select><option>Head</option><option>Spouse</option><option>Son</option><option>Daughter</option></select>
+            <input placeholder="Phone">
+            <input placeholder="Country">
+            <select><option>Job</option><option>Business</option><option>Study</option><option>Retired</option></select>
+        `;
+        document.getElementById('members').appendChild(div);
+    }
 
-// Fixed detailed view logic
-document.getElementById('tab-detail').onclick = () => {
-  showScreen('detail');
-  const detailResult = document.getElementById('detailResult');
-  
-  if (!selected) {
-    detailResult.innerHTML = "<p>Please search for a customer first in the 'Quick Search' tab.</p>";
-    return;
-  }
+    function saveCustomer() {
+        const id = document.getElementById('customerId').value;
+        if (!id) return alert("Customer ID is required");
 
-  let head = selected.members.find(m => m.relation === "Head");
-  let spouse = selected.members.find(m => m.relation === "Spouse");
+        currentRecord = {
+            customerId: id,
+            familyName: document.getElementById('familyName').value,
+            nativePlace: document.getElementById('nativePlace').value,
+            headName: document.getElementById('headName').value,
+            primaryPhone: document.getElementById('primaryPhone').value,
+            notes: document.getElementById('notes').value,
+            members: []
+        };
 
-  let html = `<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
-                <div><strong>Customer ID:</strong> ${selected.customerId}</div>
-                <div><strong>Family Name:</strong> ${selected.familyName || "N/A"}</div>
-                <div><strong>Head of Family:</strong> ${head ? head.name : "N/A"}</div>
-                <div><strong>Spouse:</strong> ${spouse ? spouse.name : "N/A"}</div>
-              </div>
-              <h4 style="border:none; margin:0;">Family Breakdown</h4>
-              <ul style="list-style: none; padding: 0;">`;
+        document.querySelectorAll("#members .member-row").forEach(r => {
+            const i = r.querySelectorAll("input, select");
+            currentRecord.members.push({
+                name: i[0].value, relation: i[1].value, phone: i[2].value, country: i[3].value, employment: i[4].value
+            });
+        });
 
-  selected.members.forEach(m => {
-    html += `<li style="padding: 10px; background: #f8fafc; margin-bottom: 5px; border-radius: 4px;">
-                <strong>${m.name}</strong> (${m.relation}) — Loc: ${m.country} | Status: ${m.employment}
-             </li>`;
-  });
+        data.push(currentRecord);
+        localStorage.setItem("customerData", JSON.stringify(data));
+        
+        // Hide Entry, Hide Nav, Show Completion
+        document.getElementById('entry').classList.add('hidden');
+        document.getElementById('navBar').classList.add('hidden');
+        document.getElementById('completionScreen').classList.remove('hidden');
+    }
 
-  html += `</ul><div style="margin-top:20px; padding: 15px; background: #fffbeb; border-left: 4px solid #f59e0b;">
-            <strong>Manager Notes:</strong><br>${selected.notes || "No notes available."}
-           </div>`;
-  
-  detailResult.innerHTML = html;
-};
+    function sendEmail() {
+        if (!currentRecord) return;
+        let body = `CUSTOMER REPORT\nID: ${currentRecord.customerId}\nHead: ${currentRecord.headName}\nFamily: ${currentRecord.familyName}\nPhone: ${currentRecord.primaryPhone}\n\nMEMBERS:\n`;
+        currentRecord.members.forEach(m => {
+            body += `- ${m.name} (${m.relation}): ${m.country} | ${m.employment}\n`;
+        });
+        body += `\nNOTES:\n${currentRecord.notes}`;
+
+        const mailto = `mailto:${MANAGER_EMAIL}?subject=Customer Data: ${currentRecord.customerId}&body=${encodeURIComponent(body)}`;
+        window.location.href = mailto;
+    }
+
+    function downloadCSV() {
+        let csv = "Name,Relation,Phone,Country,Employment\n";
+        currentRecord.members.forEach(m => {
+            csv += `"${m.name}","${m.relation}","${m.phone}","${m.country}","${m.employment}"\n`;
+        });
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.setAttribute('href', url);
+        a.setAttribute('download', `Customer_${currentRecord.customerId}.csv`);
+        a.click();
+    }
+
+    function search() {
+        const q = document.getElementById('searchInput').value.toLowerCase();
+        let html = "";
+        data.forEach(r => {
+            if (r.customerId.toLowerCase().includes(q) || r.headName.toLowerCase().includes(q)) {
+                selectedRecord = r;
+                html += `<div style="padding:15px; border:1px solid #ddd; border-radius:8px;">
+                            <strong>ID:</strong> ${r.customerId} | <strong>Head:</strong> ${r.headName}
+                            <table><tr><th>Name</th><th>Rel</th><th>Job</th></tr>`;
+                r.members.forEach(m => {
+                    html += `<tr><td>${m.name}</td><td>${m.relation}</td><td>${m.employment}</td></tr>`;
+                });
+                html += `</table></div>`;
+            }
+        });
+        document.getElementById('basicResult').innerHTML = html || "No records found.";
+    }
 </script>
 
 </body>
