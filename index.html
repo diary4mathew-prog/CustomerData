@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Customer Intelligence - Manager Use</title>
+<style>
+body { font-family: Arial; margin: 20px; }
+h2 { margin-top: 0; }
+input, select, button, textarea {
+  margin: 4px 0;
+  padding: 6px;
+  width: 100%;
+}
+button { cursor: pointer; }
+.section { border: 1px solid #ccc; padding: 10px; margin-bottom: 15px; }
+.member-row { border-bottom: 1px dashed #ccc; padding-bottom: 8px; margin-bottom: 8px; }
+.hidden { display: none; }
+table { width: 100%; border-collapse: collapse; }
+th, td { border: 1px solid #ccc; padding: 6px; }
+</style>
+</head>
+
+<body>
+
+<h2>Customer Intelligence – Branch Manager</h2>
+
+<button onclick="showScreen('entry')">Data Entry</button>
+<button onclick="showScreen('basic')">Basic View</button>
+<button onclick="showScreen('detail')">In-Depth View</button>
+
+<hr>
+
+<div id="entry" class="section">
+<h3>Data Entry</h3>
+
+<input id="customerId" placeholder="Customer ID (Mandatory)">
+<input id="familyName" placeholder="Family / House Name (Optional)">
+<input id="nativePlace" placeholder="Native Place / Area">
+<input id="headName" placeholder="Head of Family Name">
+<input id="primaryPhone" placeholder="Primary Contact Number">
+<textarea id="notes" placeholder="Notes"></textarea>
+
+<h4>Family Members</h4>
+<div id="members"></div>
+<button onclick="addMember()">Add Member</button>
+<br><br>
+<button onclick="saveCustomer()">Save</button>
+</div>
+
+<div id="basic" class="section hidden">
+<h3>Basic View</h3>
+<input id="searchInput" placeholder="Search by Customer ID / Phone / Name">
+<button onclick="search()">Search</button>
+<div id="basicResult"></div>
+</div>
+
+<div id="detail" class="section hidden">
+<h3>In-Depth View</h3>
+<div id="detailResult"></div>
+</div>
+
+<script>
+let data = JSON.parse(localStorage.getItem("customerData") || "[]");
+let selected = null;
+
+function showScreen(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+}
+
+function addMember() {
+  const div = document.createElement("div");
+  div.className = "member-row";
+  div.innerHTML = `
+    <input placeholder="Name">
+    <select>
+      <option>Head</option>
+      <option>Spouse</option>
+      <option>Son</option>
+      <option>Daughter</option>
+    </select>
+    <input placeholder="Phone (optional)">
+    <input placeholder="Country">
+    <select>
+      <option>Job</option>
+      <option>Business</option>
+      <option>Study</option>
+      <option>Retired</option>
+      <option>Not Working</option>
+    </select>
+  `;
+  members.appendChild(div);
+}
+
+function saveCustomer() {
+  if (!customerId.value) {
+    alert("Customer ID is mandatory");
+    return;
+  }
+
+  const record = {
+    customerId: customerId.value,
+    familyName: familyName.value,
+    nativePlace: nativePlace.value,
+    headName: headName.value,
+    primaryPhone: primaryPhone.value,
+    notes: notes.value,
+    members: []
+  };
+
+  document.querySelectorAll("#members .member-row").forEach(r => {
+    const i = r.querySelectorAll("input, select");
+    record.members.push({
+      name: i[0].value,
+      relation: i[1].value,
+      phone: i[2].value,
+      country: i[3].value,
+      employment: i[4].value
+    });
+  });
+
+  data.push(record);
+  localStorage.setItem("customerData", JSON.stringify(data));
+  alert("Saved successfully");
+  location.reload();
+}
+
+function search() {
+  const q = searchInput.value.toLowerCase();
+  let out = "";
+
+  data.forEach(r => {
+    r.members.forEach(m => {
+      if (
+        r.customerId.toLowerCase().includes(q) ||
+        (m.phone && m.phone.includes(q)) ||
+        m.name.toLowerCase().includes(q)
+      ) {
+        selected = r;
+        out += `Customer ID: $%7Br.customerId%7D<br>`;
+        out += `Family: $%7Br.familyName || "Not recorded"%7D<br><table>`;
+        out += `<tr><th>Name</th><th>Relation</th><th>Country</th><th>Employment</th></tr>`;
+        r.members.forEach(x => {
+          out += `<tr><td>$%7Bx.name%7D</td><td>$%7Bx.relation%7D</td><td>$%7Bx.country%7D</td><td>$%7Bx.employment%7D</td></tr>`;
+        });
+        out += `</table>`;
+      }
+    });
+  });
+
+  basicResult.innerHTML = out || "No record found";
+}
+
+document.querySelector("button[onclick=\"showScreen('detail')\"]").onclick = () => {
+  if (!selected) {
+    detailResult.innerHTML = "Search first";
+    return;
+  }
+
+  let head = selected.members.find(m => m.relation === "Head");
+  let spouse = selected.members.find(m => m.relation === "Spouse");
+
+  let html = `Customer ID: $%7Bselected.customerId%7D<br>`;
+  html += `Family: $%7Bselected.familyName || "Not recorded"%7D<br><br>`;
+  html += `Head: $%7Bhead ? head.name : "Not recorded"%7D<br>`;
+  html += `Spouse: $%7Bspouse ? spouse.name : "Not recorded"%7D<br><br><ul>`;
+
+  selected.members.forEach(m => {
+    html += `<li>$%7Bm.name%7D ($%7Bm.relation%7D) – $%7Bm.country%7D, $%7Bm.employment%7D</li>`;
+  });
+
+  html += `</ul><br>Notes:<br>$%7Bselected.notes%7D`;
+  detailResult.innerHTML = html;
+};
+</script>
+
+</body>
+</html>
