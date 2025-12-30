@@ -1,62 +1,189 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Customer Intelligence - Manager Use</title>
-<style>
-body { font-family: Arial; margin: 20px; }
-h2 { margin-top: 0; }
-input, select, button, textarea {
-  margin: 4px 0;
-  padding: 6px;
-  width: 100%;
-}
-button { cursor: pointer; }
-.section { border: 1px solid #ccc; padding: 10px; margin-bottom: 15px; }
-.member-row { border-bottom: 1px dashed #ccc; padding-bottom: 8px; margin-bottom: 8px; }
-.hidden { display: none; }
-table { width: 100%; border-collapse: collapse; }
-th, td { border: 1px solid #ccc; padding: 6px; }
-</style>
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Intelligence - Manager Portal</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+        }
 
+        body { 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+
+        header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h2 { color: var(--text-main); margin-bottom: 10px; }
+        
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            background: #eee;
+            padding: 5px;
+            border-radius: 8px;
+        }
+
+        .nav-tabs button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: 0.2s;
+            color: var(--text-muted);
+        }
+
+        .nav-tabs button.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* Forms and Sections */
+        .section { 
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+        }
+
+        .grid-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        input, select, textarea {
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        input:focus { border-color: var(--primary); }
+
+        /* Buttons */
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-hover); }
+        
+        .btn-success { background: var(--success); color: white; margin-top: 20px; width: 100%; font-size: 16px; }
+
+        .member-row { 
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1.5fr 1fr 1fr;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .hidden { display: none; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { text-align: left; color: var(--text-muted); font-size: 13px; text-transform: uppercase; padding: 12px; border-bottom: 2px solid var(--border); }
+        td { padding: 12px; border-bottom: 1px solid var(--border); font-size: 14px; }
+
+        .search-bar { display: flex; gap: 10px; margin-bottom: 20px; }
+        
+        h3 { margin-top: 0; color: var(--primary); font-size: 1.2rem; }
+        h4 { margin: 20px 0 10px 0; border-top: 1px solid var(--border); padding-top: 20px; }
+    </style>
+</head>
 <body>
 
-<h2>Customer Intelligence – Branch Manager</h2>
+<div class="container">
+    <header>
+        <h2>Customer Intelligence</h2>
+        <p style="color: var(--text-muted)">Branch Manager Dashboard</p>
+    </header>
 
-<button onclick="showScreen('entry')">Data Entry</button>
-<button onclick="showScreen('basic')">Basic View</button>
-<button onclick="showScreen('detail')">In-Depth View</button>
+    <div class="nav-tabs">
+        <button id="tab-entry" class="active" onclick="showScreen('entry')">Data Entry</button>
+        <button id="tab-basic" onclick="showScreen('basic')">Quick Search</button>
+        <button id="tab-detail" onclick="showScreen('detail')">Detailed Profile</button>
+    </div>
 
-<hr>
+    <div id="entry" class="section">
+        <h3>Primary Information</h3>
+        <div class="grid-row">
+            <input id="customerId" placeholder="Customer ID (Mandatory)">
+            <input id="headName" placeholder="Head of Family Name">
+        </div>
+        <div class="grid-row">
+            <input id="familyName" placeholder="Family / House Name">
+            <input id="primaryPhone" placeholder="Primary Contact Number">
+        </div>
+        <input id="nativePlace" placeholder="Native Place / Area" style="margin-bottom: 15px;">
+        <textarea id="notes" placeholder="Additional Notes..." rows="3"></textarea>
 
-<div id="entry" class="section">
-<h3>Data Entry</h3>
+        <h4>Family Members</h4>
+        <div id="members"></div>
+        <button class="btn btn-primary" style="background: #6366f1; font-size: 13px;" onclick="addMember()">+ Add Family Member</button>
+        
+        <button class="btn btn-success" onclick="saveCustomer()">Save Customer Record</button>
+    </div>
 
-<input id="customerId" placeholder="Customer ID (Mandatory)">
-<input id="familyName" placeholder="Family / House Name (Optional)">
-<input id="nativePlace" placeholder="Native Place / Area">
-<input id="headName" placeholder="Head of Family Name">
-<input id="primaryPhone" placeholder="Primary Contact Number">
-<textarea id="notes" placeholder="Notes"></textarea>
+    <div id="basic" class="section hidden">
+        <h3>Customer Search</h3>
+        <div class="search-bar">
+            <input id="searchInput" placeholder="Search by ID, Phone, or Name...">
+            <button class="btn btn-primary" onclick="search()">Search</button>
+        </div>
+        <div id="basicResult"></div>
+    </div>
 
-<h4>Family Members</h4>
-<div id="members"></div>
-<button onclick="addMember()">Add Member</button>
-<br><br>
-<button onclick="saveCustomer()">Save</button>
-</div>
-
-<div id="basic" class="section hidden">
-<h3>Basic View</h3>
-<input id="searchInput" placeholder="Search by Customer ID / Phone / Name">
-<button onclick="search()">Search</button>
-<div id="basicResult"></div>
-</div>
-
-<div id="detail" class="section hidden">
-<h3>In-Depth View</h3>
-<div id="detailResult"></div>
+    <div id="detail" class="section hidden">
+        <h3>In-Depth Profile</h3>
+        <div id="detailResult" style="line-height: 1.6;">
+            <p style="color: var(--text-muted)">Please search for a customer in the "Quick Search" tab first.</p>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -65,21 +192,24 @@ let selected = null;
 
 function showScreen(id) {
   document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+  document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
+  
   document.getElementById(id).classList.remove('hidden');
+  document.getElementById('tab-' + id).classList.add('active');
 }
 
 function addMember() {
   const div = document.createElement("div");
   div.className = "member-row";
   div.innerHTML = `
-    <input placeholder="Name">
+    <input placeholder="Full Name">
     <select>
       <option>Head</option>
       <option>Spouse</option>
       <option>Son</option>
       <option>Daughter</option>
     </select>
-    <input placeholder="Phone (optional)">
+    <input placeholder="Phone">
     <input placeholder="Country">
     <select>
       <option>Job</option>
@@ -89,22 +219,23 @@ function addMember() {
       <option>Not Working</option>
     </select>
   `;
-  members.appendChild(div);
+  document.getElementById('members').appendChild(div);
 }
 
 function saveCustomer() {
-  if (!customerId.value) {
+  const customerIdVal = document.getElementById('customerId').value;
+  if (!customerIdVal) {
     alert("Customer ID is mandatory");
     return;
   }
 
   const record = {
-    customerId: customerId.value,
-    familyName: familyName.value,
-    nativePlace: nativePlace.value,
-    headName: headName.value,
-    primaryPhone: primaryPhone.value,
-    notes: notes.value,
+    customerId: customerIdVal,
+    familyName: document.getElementById('familyName').value,
+    nativePlace: document.getElementById('nativePlace').value,
+    headName: document.getElementById('headName').value,
+    primaryPhone: document.getElementById('primaryPhone').value,
+    notes: document.getElementById('notes').value,
     members: []
   };
 
@@ -121,55 +252,70 @@ function saveCustomer() {
 
   data.push(record);
   localStorage.setItem("customerData", JSON.stringify(data));
-  alert("Saved successfully");
+  alert("Record Saved Successfully");
   location.reload();
 }
 
 function search() {
-  const q = searchInput.value.toLowerCase();
+  const q = document.getElementById('searchInput').value.toLowerCase();
   let out = "";
+  let found = false;
 
   data.forEach(r => {
+    let match = r.customerId.toLowerCase().includes(q) || r.primaryPhone.includes(q);
     r.members.forEach(m => {
-      if (
-        r.customerId.toLowerCase().includes(q) ||
-        (m.phone && m.phone.includes(q)) ||
-        m.name.toLowerCase().includes(q)
-      ) {
+      if (m.name.toLowerCase().includes(q) || (m.phone && m.phone.includes(q))) match = true;
+    });
+
+    if (match) {
+        found = true;
         selected = r;
-        out += `Customer ID: $%7Br.customerId%7D<br>`;
-        out += `Family: $%7Br.familyName || "Not recorded"%7D<br><table>`;
-        out += `<tr><th>Name</th><th>Relation</th><th>Country</th><th>Employment</th></tr>`;
+        out += `<div style="margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 10px;">
+                <strong>ID:</strong> ${r.customerId} | <strong>Family:</strong> ${r.familyName || "N/A"}</div>
+                <table>
+                <tr><th>Name</th><th>Relation</th><th>Country</th><th>Employment</th></tr>`;
         r.members.forEach(x => {
-          out += `<tr><td>$%7Bx.name%7D</td><td>$%7Bx.relation%7D</td><td>$%7Bx.country%7D</td><td>$%7Bx.employment%7D</td></tr>`;
+          out += `<tr><td>${x.name}</td><td>${x.relation}</td><td>${x.country}</td><td>${x.employment}</td></tr>`;
         });
         out += `</table>`;
-      }
-    });
+    }
   });
 
-  basicResult.innerHTML = out || "No record found";
+  document.getElementById('basicResult').innerHTML = found ? out : "No matching records found.";
 }
 
-document.querySelector("button[onclick=\"showScreen('detail')\"]").onclick = () => {
+// Fixed detailed view logic
+document.getElementById('tab-detail').onclick = () => {
+  showScreen('detail');
+  const detailResult = document.getElementById('detailResult');
+  
   if (!selected) {
-    detailResult.innerHTML = "Search first";
+    detailResult.innerHTML = "<p>Please search for a customer first in the 'Quick Search' tab.</p>";
     return;
   }
 
   let head = selected.members.find(m => m.relation === "Head");
   let spouse = selected.members.find(m => m.relation === "Spouse");
 
-  let html = `Customer ID: $%7Bselected.customerId%7D<br>`;
-  html += `Family: $%7Bselected.familyName || "Not recorded"%7D<br><br>`;
-  html += `Head: $%7Bhead ? head.name : "Not recorded"%7D<br>`;
-  html += `Spouse: $%7Bspouse ? spouse.name : "Not recorded"%7D<br><br><ul>`;
+  let html = `<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                <div><strong>Customer ID:</strong> ${selected.customerId}</div>
+                <div><strong>Family Name:</strong> ${selected.familyName || "N/A"}</div>
+                <div><strong>Head of Family:</strong> ${head ? head.name : "N/A"}</div>
+                <div><strong>Spouse:</strong> ${spouse ? spouse.name : "N/A"}</div>
+              </div>
+              <h4 style="border:none; margin:0;">Family Breakdown</h4>
+              <ul style="list-style: none; padding: 0;">`;
 
   selected.members.forEach(m => {
-    html += `<li>$%7Bm.name%7D ($%7Bm.relation%7D) – $%7Bm.country%7D, $%7Bm.employment%7D</li>`;
+    html += `<li style="padding: 10px; background: #f8fafc; margin-bottom: 5px; border-radius: 4px;">
+                <strong>${m.name}</strong> (${m.relation}) — Loc: ${m.country} | Status: ${m.employment}
+             </li>`;
   });
 
-  html += `</ul><br>Notes:<br>$%7Bselected.notes%7D`;
+  html += `</ul><div style="margin-top:20px; padding: 15px; background: #fffbeb; border-left: 4px solid #f59e0b;">
+            <strong>Manager Notes:</strong><br>${selected.notes || "No notes available."}
+           </div>`;
+  
   detailResult.innerHTML = html;
 };
 </script>
